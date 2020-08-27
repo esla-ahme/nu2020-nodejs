@@ -8,8 +8,25 @@ router.use(express.json());
 
 router.get('/',(req,res)=>{
     const posts = Post.find().limit(5);
-    
+    posts.exec()
+    .then(data=>{
+        res.send(data);
+    }).catch(err=>{
+        res.status(404).send({message:err});
+    });
 });
+
+router.get('/',(req,res)=>{
+    const posts = Post.find().limit(5);
+    posts.exec()
+    .then(data=>{
+        res.send(data);
+    }).catch(err=>{
+        res.status(404).send({message:err});
+    });
+});
+
+
 
 router.post('/',(req,res)=>{
 
