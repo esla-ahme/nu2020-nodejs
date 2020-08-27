@@ -1,0 +1,11 @@
+{
+  "name": "rest_api_men",
+  "version": "1.0.0",
+  "description": "REST api with NodeJs, ExpressJs and Mongodb",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
