@@ -78,7 +78,7 @@ app.put('/api/books/:id',(req,res)=>
 });
 
 app.delete('/api/books/:id',(req,res)=>{
-    Post.remove({_id:req.params.id})
+    Post.deleteOne({_id:req.params.id})
     .exec()
     .then(result => {
            res.send(result);
