@@ -3,53 +3,89 @@ const app = express();
 const port = 3000;
 app.use(express.json()) //deal with json requests
 
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:bookshop',
+    { useNewUrlParser: true ,  useUnifiedTopology: true },
+    ()=>{
+        console.log("connected to db");
+    })
 
-let books = [
-    {isbn:1234,title:"A Song of Ice and Fire",publisher:"Pub 1"},
-    {isbn:1233,title:"This Blinding Absense of Light",publisher:"Pub 2"},
-    {isbn:1232,title:"Wonder",publisher:"Pub 2"},
-    {isbn:1231,title:"The Raven (poet)",publisher:"Pub 3"}
-];
+    const PostSchema = mongoose.Schema({
+        title:{
+            type:  String,
+            required: true
+        },
+        description: {
+            type:  String,
+            required: true
+        },
+        date:{
+            type:  Date,
+            default: Date.now
+        }
+    })
+    const Post = mongoose.model('Posts',PostSchema)
+
 app.get('/api/books',(req,res) => {
-    res.send(books);
+    const posts = Post.find().limit(5);
+    posts.exec()
+    .then(data=>{
+        res.send(data);
+    }).catch(err=>{
+        res.status(404).send({message:err});
+    });
 });
 
-app.get('/api/books/:isbn',(req,res)=>
+app.get('/api/books/:id',(req,res)=>
 {
-    let isbn =parseInt(req.params.isbn);
-    const book = books.find(b => b.isbn === isbn);
-    if(!book) return res.status(404).send("The book with the given isbn not found");
-    res.send(book)
+    const post = Post.findOne({_id:req.params.id});
+    post.exec()
+    .then(post =>{
+        res.send(post)
+    }).catch(err=>{
+        res.status(404).send({message:err});
+    });
 });
 
 app.post('/api/books',(req,res)=>
 {
-    const book = {
-        isbn: books[books.length-1].isbn-1,
+    const p = new Post({
         title: req.body.title,
-        publisher: req.body.publisher
-    }
-    books.push(book);
-    res.send(book);
+        description : req.body.description
+    });
+    p.save()
+    .then(data => {
+        res.send(data);
+    })
+    .catch(err=>{
+        res.status(404).send({message:err});
+    })
 });
 
-app.put('/api/books/:isbn',(req,res)=>
+app.put('/api/books/:id',(req,res)=>
 {
-    let isbn =parseInt(req.params.isbn);
-    const book = books.find(b => b.isbn === isbn);
-    if(!book) return res.status(404).send("The book with the given isbn not found");
-    book.title = req.body.title;
-    book.publisher =  req.body.publisher;
-    res.send(book)
+    const p = new Post({
+        title: req.body.title,
+        description : req.body.description
+    });
+    p.save()
+    .then(data => {
+        res.send(data);
+    })
+    .catch(err=>{
+        res.status(404).send({message:err});
+    })
 });
 
-app.delete('/api/books/:isbn',(req,res)=>{
-    let isbn =parseInt(req.params.isbn);
-    const book = books.find(b => b.isbn === isbn);
-    if(!book) return res.status(404).send("The book with the given isbn not found");
-    const index = books.indexOf(book); // generally id is not same as index 
-    books.splice(index,1);
-    res.send(book);
+app.delete('/api/books/:id',(req,res)=>{
+    Post.remove({_id:req.params.id})
+    .exec()
+    .then(result => {
+           res.send(result);
+    })
+    .catch(err => {
+        res.status(404).send({message:err});
+    });
 })
 
 
