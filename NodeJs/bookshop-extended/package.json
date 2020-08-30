@@ -1,0 +1,27 @@
+{
+  "name": "booksshop",
+  "version": "1.0.0",
+  "description": "bookshop api supporting books authors publishers and users",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/esla-ahme/nu2020-nodejs.git"
+  },
+  "keywords": [
+    "node",
+    "js",
+    "api",
+    "mongo",
+    "express",
+    "joi"
+  ],
+  "author": "Eslam Ahmed",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/esla-ahme/nu2020-nodejs/issues"
+  },
+  "homepage": "https://github.com/esla-ahme/nu2020-nodejs#readme"
+}
