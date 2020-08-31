@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/esla-ahme/nu2020-nodejs/issues"
   },
-  "homepage": "https://github.com/esla-ahme/nu2020-nodejs#readme"
+  "homepage": "https://github.com/esla-ahme/nu2020-nodejs#readme",
+  "dependencies": {
+    "rand-token": "^1.0.1"
+  }
 }
