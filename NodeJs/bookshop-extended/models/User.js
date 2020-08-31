@@ -1,18 +1,36 @@
 const mongoose = require('mongoose');
 
 const PostSchema = mongoose.Schema({
-    title:{
+    username:{
         type:  String,
-        required: true
+        required: true,
+        unique: true,
+        min:3,
+        max:30
     },
-    description: {
+    email: {
         type:  String,
-        required: true
+        required: true,
+        unique: true
+
     },
-    date:{
-        type:  Date,
-        default: Date.now
+    password:{
+        type: String,
+        required: true,
+        min:6,
+        max:12
+    },
+    token: {
+        type: String,
+        default: ()=> {
+        return randToken.generate(64);
+    },
+    role:{
+        type:String,
+        default:"guest"
     }
+}
+    
 })
 
 module.exports = mongoose.model('User',PostSchema)
