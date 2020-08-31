@@ -6,7 +6,7 @@ router.use(express.json());
 
 
 router.get('/',(req,res)=>{
-   const books = Book.find().limit(5);
+   const books = Book.find().limit(10);
    books.exec()
    .then(data=>{
        res.send(data);

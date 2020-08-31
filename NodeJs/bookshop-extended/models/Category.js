@@ -5,14 +5,7 @@ const PostSchema = mongoose.Schema({
         type:  String,
         required: true
     },
-    description: {
-        type:  String,
-        required: true
-    },
-    date:{
-        type:  Date,
-        default: Date.now
-    }
+    parentcategory: String
 })
 
 module.exports = mongoose.model('Catagory',PostSchema)
